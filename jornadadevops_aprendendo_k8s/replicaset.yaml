@@ -1,0 +1,40 @@
+############## REPLICASET CONTROLA NUMERO DE PODS ############
+#// apiVersion Pode Ser Consultada Pelo Comando kubectl api-resources | grep ReplicaSet
+#// onde se pega a versão da API Kubernetes e Utiliza, isso pode mudar de versão mas
+#// dificilmente vai ocorrer.
+apiVersion: apps/v1
+#// Kind especifica o tipo de objeto, no caso deste YAML, Kind ReplicaSet - Tipo ReplicaSet
+kind: ReplicaSet
+#// Metadata são os dados adicionais que vão ser utilizados, no caso abaixo
+#// Definindo o nome do ReplicaSet para "meureplicaset"
+metadata:
+  name: meureplicaset
+# Especificações que o ReplicaSet Vai Receber
+spec:
+  replicas: 5 #especificando que deve ser rodado 5 replicas
+# No Caso, configurando o SELECTOR, que é a forma como ele vai verificar e escolher os pods para efetuar as mudanças que queremos
+# no caso, ele vai prcurar pela label "web", para gerenciamento
+  selector:
+    matchLabels:
+      app: web
+# caso bata a label app com parametro web, será efetuado as ações deste YAML
+  template:
+    # template se coloca as especificações do POD que será gerenciado
+    # os dados do arquivo POD.yaml mas sem alguns campos como API Version, Kind etc.
+    metadata: 
+      name: meupod-azul
+    # alterando o label para app web para gerenciamento pelo ReplicaSet
+      labels:
+        app: web
+    #// Especificações do POD, especificando que ele vai rodar containers
+    #// Cada POD pode rodar 1 ou mais containers, bastando especificar eles, no caso abaixo está
+    #// sendo usado somente 1 container
+    spec:
+      containers:
+    #// nome do container
+      - name: site
+    #// imagem que será utilizada para subir o container
+        image: fabricioveronez/web-page:green
+    #// portas que serão disponibilizadas para acesso ao serviço dentro do container
+        ports: 
+        - containerPort: 80

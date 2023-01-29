@@ -1,0 +1,25 @@
+############## Service CONTROLA O ReplicaSet ############
+#// apiVersion Pode Ser Consultada Pelo Comando kubectl api-resources | grep Service
+#// onde se pega a versão da API Kubernetes e Utiliza, isso pode mudar de versão mas
+#// dificilmente vai ocorrer.
+apiVersion: v1
+#// Kind especifica o tipo de objeto, no caso deste YAML, Kind Service - Tipo Service
+kind: Service
+#// Metadata são os dados adicionais que vão ser utilizados, no caso abaixo
+#// Definindo o nome do Service para "meuService"
+metadata:
+  name: web-page
+# Especificações que o Service Vai Receber
+spec:
+# No Caso, configurando o SELECTOR, que é a forma como ele vai verificar e escolher os pods para efetuar as mudanças que queremos
+# no caso, ele vai prcurar pela label "web", para gerenciamento
+  selector:
+      app: web
+    #// portas que serão disponibilizadas para acesso ao serviço dentro do container
+  ports: 
+    - port: 80
+      protocol: TCP
+  type: NodePort
+
+## COMANDO DE ROLLBACK - ROLLOUT de versão
+# kubectl rollout undo Service meuService - colocar nome do Service

@@ -1,0 +1,58 @@
+#// Estrutura Básica de Arquivo YAML para subir um POD
+#// apiVersion Pode Ser Consultada Pelo Comando kubectl api-resources | grep pod
+#// onde se pega a versão da API Kubernetes e Utiliza, isso pode mudar de versão mas
+#// dificilmente vai ocorrer.
+apiVersion: v1
+#// Kind especifica o tipo de objeto, no caso deste YAML, Kind POD - Tipo POD
+kind: Pod
+#// Metadata são os dados adicionais que vão ser utilizados, no caso abaixo
+#// Definindo o nome do POD para "meupod"
+metadata: 
+  name: meupod-azul
+# Adição de Label pois o Selector, que controle numero de pods e status dos mesmos utiliza
+# elas para o controle, funciona como uma marcação para separação de instancias pela labels
+  labels:
+    cor: azul
+#// Especificações do POD, especificando que ele vai rodar containers
+#// Cada POD pode rodar 1 ou mais containers, bastando especificar eles, no caso abaixo está
+#// sendo usado somente 1 container
+spec:
+  containers:
+#// nome do container
+  - name: site
+#// imagem que será utilizada para subir o container
+    image: fabricioveronez/web-page:blue
+#// portas que serão disponibilizadas para acesso ao serviço dentro do container
+    ports: 
+    - containerPort: 80
+## kubectl apply -f nomearquivo.yaml
+## acessar o serviço, comando: kubectl --port-forward pod/meupod 8080:80
+## trocar o meupod pelo nome do pod que quer fazer port-forwarding
+## Pode Declarar Diversos Objetos no mesmo arquivo YAML
+############### Inicio de Declaração de outro POD ##########################
+---
+apiVersion: v1
+#// Kind especifica o tipo de objeto, no caso deste YAML, Kind POD - Tipo POD
+kind: Pod
+#// Metadata são os dados adicionais que vão ser utilizados, no caso abaixo
+#// Definindo o nome do POD para "meupod"
+metadata: 
+  name: meupod-verde
+# Adição de Label pois o Selector, que controle numero de pods e status dos mesmos utiliza
+# elas para o controle, funciona como uma marcação para separação de instancias pela labels
+  labels:
+    cor: verde
+#// Especificações do POD, especificando que ele vai rodar containers
+#// Cada POD pode rodar 1 ou mais containers, bastando especificar eles, no caso abaixo está
+#// sendo usado somente 1 container
+spec:
+  containers:
+#// nome do container
+  - name: site
+#// imagem que será utilizada para subir o container
+    image: fabricioveronez/web-page:blue
+#// portas que serão disponibilizadas para acesso ao serviço dentro do container
+    ports: 
+    - containerPort: 80
+## kubectl get pods -l cor=azul lista apenas o POD Azul
+## mudar a cor seleciona apenas a cor descrita
