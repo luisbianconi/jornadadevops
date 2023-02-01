@@ -1,3 +1,7 @@
+# Comandos Uteis Terraform - Terraform fmt - Formatar o Arquivo .tf para boa sintaxe, também verifica erros de sintaxe
+# Terraform plan - efetua o planejamento somente
+# Terraform destroy - destroi tudo criado em nuvem
+  
 # Pegar o Provider no site da Hashicorp - https://registry.terraform.io/browse/providers
 # Selecionar o Provider e ir em Documentação
 # Colocar o Bloco de Provider, salvar e rodar o comando terraform init, assim sendo inicializado o terraform
@@ -65,7 +69,7 @@ variable "SSH_key_name" {
   default = ""
 }
 
-output "jnkins_IP" {
+output "jenkins_IP" {
 value = digitalocean_droplet.jenkins.ipv4_address 
 }
 
@@ -73,6 +77,3 @@ resource "local_file" "CreateLocalFile" {
 content = digitalocean_kubernetes_cluster.k8s.kube_config.0.raw_config
 filename = "/home/luisbianconi/.kube/config"
 }
-
-
-
