@@ -24,7 +24,7 @@ pipeline {
 
         stage ('Deploy Kubernetes') {
             steps {
-                withKubeconfig ([credentialsId: 'kubeconfig']) {
+                withKubeConfig ([credentialsId: 'kubeconfig']) {
                     sh "kubectl apply -f ./jornadadevops_kube-news/k8s/*"
                 }
             }
