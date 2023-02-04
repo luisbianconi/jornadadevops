@@ -11,15 +11,15 @@ pipeline {
             }
         }
 
-    stage ('Push Docker Image') {
-        steps {
-            script {
-                docker.withRegistry('https://registry.hub.docker.com', '1996') {
-                    dockerapp.push('latest')
-                    docker.app("${env.BUILD_ID}")
+        stage ('Push Docker Image') {
+            steps {
+                script {
+                    docker.withRegistry('https://registry.hub.docker.com', '1996') {
+                        dockerapp.push('latest')
+                        docker.app("${env.BUILD_ID}")
+                    }
                 }
             }
         }
     }
-}
 }
