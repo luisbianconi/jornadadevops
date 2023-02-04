@@ -21,5 +21,13 @@ pipeline {
                 }
             }
         }
+
+        stage ('Deploy Kubernetes') {
+            steps {
+                withKubeconfig([credentialsID, 'kubeconfig']) {
+                    sh "kubectl apply -f ./jornadadevops_kube-news/k8s/*"
+                }
+            }
+        }
     }
 }
